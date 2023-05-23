@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网页主题切换</title>
+
+    <style>
+        :root {
+
+            --text-light-color: #333333;
+            --text-night-color: #f0f0f0;
+
+            --background-light-color: #f0f0f0;
+            --background-night-color: #333333;
+
+            --bg-color: var(--background-light-color);
+            --text-colr: var(--text-light-color);
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* 媒体查询浏览器白色背景模式 */
+        @media screen and (prefers-color-scheme: light) {
+
+            :root {
+                --bg-color: var(--background-light-color);
+                --text-color: var(--text-light-color);
+            }
+
+        }
+
+        /* 媒体查询浏览器深色背景模式 */
+        @media screen and (prefers-color-scheme: dark) {
+
+            :root {
+                --bg-color: var(--background-night-color);
+                --text-color: var(--text-night-color);
+            }
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            color: var(--text-color);
+            transition: background-color 0.5s, color 0.5s;
+            transform-origin: right;
+            background-color: var(--bg-color);
+        }
+
+        #ui {
+            font-size: 1.5rem;
+            /* 使用微软雅黑 */
+            font-family: "Microsoft YaHei";
+        }
+    </style>
+</head>
+
+<body>
+    <div id="ui"></div>
+    <button class="btn">点击我切换背景</button>
+
+    <script>
+        // 在ui中加入一首诗
+        var ui = document.getElementById('ui');
+        ui.innerHTML = `
+    <pre>
+    《静夜思》
+    床前明月光，
+    疑是地上霜。
+    举头望明月，
+    低头思故乡。
+    ABCDEFGabcdefg
+    </pre>
+`;
+
+        // 点击btn, 根据改变css变量来实现切换背景
+        var btn = document.querySelector('.btn');
+        btn.addEventListener('click', function () {
+            let backgroundThemeColor = window.getComputedStyle(window.document.documentElement).getPropertyValue('--bg-color');
+            switch (backgroundThemeColor.toUpperCase()) {
+                /* 黑色背景，黑色模式 */
+                case '#333333':
+                    console.log('黑色')
+                    window.document.documentElement.style.setProperty('--bg-color', 'var(--background-light-color)');
+                    window.document.documentElement.style.setProperty('--text-color', 'var(--text-light-color)')
+                    break;
+                case '#F0F0F0':
+                    console.log('白色')
+                    window.document.documentElement.style.setProperty('--bg-color', 'var(--background-night-color)');
+                    window.document.documentElement.style.setProperty('--text-color', 'var(--text-night-color)')
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        // 斐波那契数列
+        function fib(n) {
+            if (n <= 1) {
+                return n;
+            }
+            return fib(n - 1) + fib(n - 2);
+        }
+
+
+    </script>
+</body>
+
+</html>
